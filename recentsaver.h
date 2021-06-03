@@ -36,7 +36,7 @@ class QUrl;
  * is needed before and after each file dialogue to look up the appropriate
  * recent location and save it afterwards.  This class automates that.
  *
- * For a simple use of the static QFileDialog functions, simple create and
+ * For a simple use of the static QFileDialog functions, simply create and
  * use a RecentSaver like this:
  *
  * @code
