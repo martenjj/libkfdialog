@@ -1,30 +1,22 @@
 /************************************************************************
  *									*
- *  This file is part of Kooka, a scanning/OCR application using	*
- *  Qt <http://www.qt.io> and KDE Frameworks <http://www.kde.org>.	*
+ *  This source file is part of libkfdialog, a helper library for	*
+ *  implementing QtWidgets-based dialogues under KDE Frameworks or	*
+ *  standalone.  Originally developed as part of Kooka, a KDE		*
+ *  scanning/OCR application.						*
  *									*
- *  Copyright (C) 2016 Jonathan Marten <jjm@keelhaul.me.uk>		*
+ *  The library is free software; you can redistribute and/or		*
+ *  modify it under the terms of the GNU General Public License		*
+ *  version 2 or (at your option) any later version, as published	*
+ *  by the Free Software Foundation and appearing in the file		*
+ *  COPYING included in the packaging of this library, or at		*
+ *  http://www.gnu.org/licenses/gpl.html				*
  *									*
- *  Kooka is free software; you can redistribute it and/or modify it	*
- *  under the terms of the GNU Library General Public License as	*
- *  published by the Free Software Foundation and appearing in the	*
- *  file COPYING included in the packaging of this file;  either	*
- *  version 2 of the License, or (at your option) any later version.	*
+ *  Copyright (C) 2016-2021 Jonathan Marten				*
+ *                          <jjm AT keelhaul DOT me DOT uk>		*
+ *			    and Kooka authors/contributors		*
  *									*
- *  As a special exception, permission is given to link this program	*
- *  with any version of the KADMOS OCR/ICR engine (a product of		*
- *  reRecognition GmbH, Kreuzlingen), and distribute the resulting	*
- *  executable without including the source code for KADMOS in the	*
- *  source distribution.						*
- *									*
- *  This program is distributed in the hope that it will be useful,	*
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of	*
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the	*
- *  GNU General Public License for more details.			*
- *									*
- *  You should have received a copy of the GNU General Public		*
- *  License along with this program;  see the file COPYING.  If		*
- *  not, see <http://www.gnu.org/licenses/>.				*
+ *  Home page:  https://github.com/martenjj/libkfdialog			*
  *									*
  ************************************************************************/
 
@@ -33,7 +25,8 @@
 
 #include <qdialog.h>
 #include <qdialogbuttonbox.h>
-#include "libdialogutil_export.h"
+
+#include "libkfdialog_export.h"
 
 class QShowEvent;
 class QSpacerItem;
@@ -56,7 +49,7 @@ class DialogStateSaver;
  * @author Jonathan Marten
  **/
 
-class LIBDIALOGUTIL_EXPORT DialogBase : public QDialog
+class LIBKFDIALOG_EXPORT DialogBase : public QDialog
 {
     Q_OBJECT
 
