@@ -25,4 +25,4 @@
 find_dependency(KF5Config)
 find_dependency(KF5WidgetsAddons)
 
-set(DIALOGUTIL_LIBRARIES "-lkfdialog")
+set(LIBKFDIALOG_LIBRARIES "-lkfdialog")
