@@ -81,7 +81,7 @@ void DialogStateSaver::restoreWindowState(QWidget *widget)
 void DialogStateSaver::restoreWindowState(QWidget *widget, const KConfigGroup &grp)
 {
     // Ensure that the widget's window() - that is, either the widget itself
-    // or its nearest ancestor widget that is or could be top level- is a
+    // or its nearest ancestor widget that is or could be top level - is a
     // native window, so that windowHandle() below will return a valid QWindow.
     const WId wid = widget->window()->winId();
     const QRect desk = widget->window()->windowHandle()->screen()->geometry();
