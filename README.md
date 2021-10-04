@@ -1,4 +1,3 @@
-
 LibKFDialog - A helper for implementing QtWidgets dialogues using KDE Frameworks
 ================================================================================
 
@@ -55,6 +54,7 @@ standard CMake-based project:
   make install
 ```
 For an example of the library in use, see KRepton
-<https://github.com/martenjj/krepton>.
+(https://github.com/martenjj/krepton) or Umbrail
+(https://github.com/martenjj/umbrail).
 
 Jonathan Marten, http://github.com/martenjj
