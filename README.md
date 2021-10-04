@@ -53,8 +53,9 @@ standard CMake-based project:
   make
   make install
 ```
-For an example of the library in use, see KRepton
-(https://github.com/martenjj/krepton) or Umbrail
-(https://github.com/martenjj/umbrail).
+For an example of the library in use, see
+KRepton (https://github.com/martenjj/krepton),
+Umbrail (https://github.com/martenjj/umbrail),
+or Kooka (https://invent.kde.org/graphics/kooka).
 
 Jonathan Marten, http://github.com/martenjj
