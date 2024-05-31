@@ -26,3 +26,4 @@ find_dependency(KF@QV@Config)
 find_dependency(KF@QV@WidgetsAddons)
 
 set(LIBKFDIALOG_LIBRARIES "-lkfdialog")
+set(LIBKFDIALOG_INCLUDES "@KDE_INSTALL_FULL_INCLUDEDIR@/kfdialog" "@KDE_INSTALL_FULL_INCLUDEDIR@")

@@ -144,7 +144,7 @@ ecm_configure_package_config_file(
 ##########################################################################
 
 install(TARGETS kfdialog ${INSTALL_TARGETS_DEFAULT_ARGS})
-install(FILES ${dialogutil_HDRS} DESTINATION ${KDE_INSTALL_INCLUDEDIR}/kf${QV}/kfdialog)
+install(FILES ${dialogutil_HDRS} DESTINATION ${KDE_INSTALL_INCLUDEDIR}/kfdialog)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${DU}Config.cmake" DESTINATION ${CONFIGDIR} COMPONENT Devel)
 
 ecm_qt_install_logging_categories(EXPORT libkfdialoglogging
