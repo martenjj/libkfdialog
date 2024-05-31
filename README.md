@@ -47,6 +47,7 @@ standard CMake-based project:
 ```
   git clone https://github.com/martenjj/libkfdialog
   cd libkfdialog
+  git switch kf6       # if building for Frameworks 6
   mkdir BUILD
   cd BUILD
   cmake ..
