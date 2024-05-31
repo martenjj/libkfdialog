@@ -12,7 +12,7 @@
 ##  COPYING included in the packaging of this library, or at		##
 ##  http://www.gnu.org/licenses/gpl.html				##
 ##									##
-##  Copyright (C) 2016-2021 Jonathan Marten				##
+##  Copyright (C) 2016-2024 Jonathan Marten				##
 ##                          <jjm AT keelhaul DOT me DOT uk>		##
 ##			    and Kooka authors/contributors		##
 ##									##
@@ -22,7 +22,7 @@
 
 @PACKAGE_INIT@
 
-find_dependency(KF5Config)
-find_dependency(KF5WidgetsAddons)
+find_dependency(KF@QV@Config)
+find_dependency(KF@QV@WidgetsAddons)
 
 set(LIBKFDIALOG_LIBRARIES "-lkfdialog")
