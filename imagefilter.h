@@ -12,7 +12,7 @@
  *  COPYING included in the packaging of this library, or at		*
  *  http://www.gnu.org/licenses/gpl.html				*
  *									*
- *  Copyright (C) 2016-2021 Jonathan Marten				*
+ *  Copyright (C) 2016-2024 Jonathan Marten				*
  *                          <jjm AT keelhaul DOT me DOT uk>		*
  *			    and Kooka authors/contributors		*
  *									*
@@ -33,7 +33,7 @@
  *
  * This class generates a filter suitable to use with either Qt or
  * KDE Frameworks file dialogues.  Although @c KFileDialog is deprecated
- * in Frameworks, a KDE filter is still required for a @c KUrlRequester
+ * in Frameworks, a KDE filter may still be required for a @c KUrlRequester
  * or if KFileWidget is used directly.
  *
  * @author Jonathan Marten
@@ -73,7 +73,7 @@ namespace ImageFilter
      * @return The filter list
      **/
     LIBKFDIALOG_EXPORT QStringList qtFilterList(ImageFilter::FilterMode mode,
-                                                  ImageFilter::FilterOptions options = ImageFilter::NoOptions);
+                                                ImageFilter::FilterOptions options = ImageFilter::NoOptions);
 
     /**
      * Generate a Qt-style filter string.
@@ -86,7 +86,7 @@ namespace ImageFilter
      * @return The filter string
      **/
     LIBKFDIALOG_EXPORT QString qtFilterString(ImageFilter::FilterMode mode,
-                                                ImageFilter::FilterOptions options = ImageFilter::NoOptions);
+                                              ImageFilter::FilterOptions options = ImageFilter::NoOptions);
 
     /**
      * Generate a KDE-style filter list.
@@ -97,8 +97,8 @@ namespace ImageFilter
      * @param options Options for the filter generation.
      * @return The filter string
      **/
-    LIBKFDIALOG_EXPORT QString kdeFilter(ImageFilter::FilterMode mode,
-                                           ImageFilter::FilterOptions options = ImageFilter::NoOptions);
+    Q_DECL_DEPRECATED_X("Use Qt filter format") LIBKFDIALOG_EXPORT QString kdeFilter(ImageFilter::FilterMode mode,
+                                                                                     ImageFilter::FilterOptions options = ImageFilter::NoOptions);
 }
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(ImageFilter::FilterOptions)

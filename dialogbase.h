@@ -12,7 +12,7 @@
  *  COPYING included in the packaging of this library, or at		*
  *  http://www.gnu.org/licenses/gpl.html				*
  *									*
- *  Copyright (C) 2016-2021 Jonathan Marten				*
+ *  Copyright (C) 2016-2024 Jonathan Marten				*
  *                          <jjm AT keelhaul DOT me DOT uk>		*
  *			    and Kooka authors/contributors		*
  *									*
@@ -102,15 +102,6 @@ public:
      * @return the state watcher
      **/
     DialogStateWatcher *stateWatcher() const		{ return (mStateWatcher); }
-
-    /**
-     * Get a spacing hint suitable for use within the dialog layout.
-     *
-     * @return The spacing hint
-     * @deprecated Kept for compatibility with KDE4.
-     * Use @c verticalSpacing() or @c horizontalSpacing() as appropriate.
-     **/
-    static Q_DECL_DEPRECATED int spacingHint();
 
     /**
      * Get a vertical spacing suitable for use within the dialog layout.
