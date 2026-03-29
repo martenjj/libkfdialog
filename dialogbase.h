@@ -12,7 +12,7 @@
  *  COPYING included in the packaging of this library, or at		*
  *  http://www.gnu.org/licenses/gpl.html				*
  *									*
- *  Copyright (C) 2016-2024 Jonathan Marten				*
+ *  Copyright (C) 2016-2026 Jonathan Marten				*
  *                          <jjm AT keelhaul DOT me DOT uk>		*
  *			    and Kooka authors/contributors		*
  *									*
@@ -155,6 +155,8 @@ public:
      *
      * @param button The button to set
      * @param state The enable state for the button
+     *
+     * @see setModified()
      **/
     void setButtonEnabled(QDialogButtonBox::StandardButton button, bool state = true);
 
@@ -191,6 +193,42 @@ public:
      **/
     void setButtonGuiItem(QDialogButtonBox::StandardButton button, const KGuiItem &guiItem);
 
+    /**
+     * Enable modification mode and set whether the dialogue is modified.
+     *
+     * This mode sets the OK, Cancel and Close buttons accordingly as to
+     * whether the dialogue state has been modified.  If this is called
+     * with @p mod set to @c false then the the Close button will be
+     * shown, the Cancel button will be hidden, and the OK button will
+     * be disabled.  If called with @p mod set to @c true then Close
+     * will be hidden, Cancel will be shown, and OK will be enabled.
+     *
+     * If intended to be enabled as above, the state of the OK button
+     * also depends on whether @c setButtonEnabled() has been called
+     * for that button.  If the dialogue state is not modified, in which
+     * case the OK button is disabled, @c setButtonEnabled() will not
+     * enable or disable it but simply retain the intended state.  When
+     * the dialogue becomes modified, the OK button will be enabled
+     * accordingly.
+     *
+     * If this function is never called then there will be no tracking
+     * of the modification state and no changes will be made to any
+     * buttons.
+     *
+     * @param mod Whether dialogue settings have been modified
+     *
+     * @see setButtonEnabled()
+     **/
+    void setModified(bool mod);
+
+    /**
+     * Check whether the dialogue is modified.
+     *
+     * @return @c true if modification mode is in use and the
+     * dialogue is modified.
+     **/
+    bool isModified() const				{ return (mModifiedState); }
+
 protected:
     /**
      * Constructor.
@@ -215,6 +253,10 @@ private:
     QDialogButtonBox *mButtonBox;
     QWidget *mMainWidget;
     DialogStateWatcher *mStateWatcher;
+
+    bool mModifyingMode;
+    bool mModifiedState;
+    bool mOkShouldBeEnabled;
 };
 
 #endif							// DIALOGBASE_H
