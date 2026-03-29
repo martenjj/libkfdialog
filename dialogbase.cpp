@@ -30,6 +30,7 @@
 #include <QSpacerItem>
 
 #include <kguiitem.h>
+#include <kstandardshortcut.h>
 
 #include "dialogstatewatcher.h"
 #include "libkfdialog_logging.h"
@@ -90,8 +91,13 @@ void DialogBase::setButtons(QDialogButtonBox::StandardButtons buttons)
         okButton->setShortcut(Qt::CTRL|Qt::Key_Return);
     }
 
-    // TODO: need to set F1 shortcut for Help?
-
+    if (buttons & QDialogButtonBox::Help)
+    {
+        qCDebug(LIBKFDIALOG_LOG) << "setting up Help button";
+        QPushButton *helpButton = mButtonBox->button(QDialogButtonBox::Help);
+        const QList<QKeySequence> shortcuts = KStandardShortcut::help();
+        if (!shortcuts.isEmpty()) helpButton->setShortcut(shortcuts.first());
+    }
 }
 
 

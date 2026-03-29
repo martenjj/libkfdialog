@@ -12,7 +12,7 @@
 ##  COPYING included in the packaging of this library, or at		##
 ##  http://www.gnu.org/licenses/gpl.html				##
 ##									##
-##  Copyright (C) 2016-2024 Jonathan Marten				##
+##  Copyright (C) 2016-2026 Jonathan Marten				##
 ##                          <jjm AT keelhaul DOT me DOT uk>		##
 ##			    and Kooka authors/contributors		##
 ##									##
@@ -120,7 +120,7 @@ generate_export_header(kfdialog BASE_NAME libkfdialog)
 target_link_libraries(kfdialog
   Qt${QV}::Core Qt${QV}::Widgets
   KF${QV}::I18n
-  KF${QV}::ConfigCore
+  KF${QV}::ConfigCore KF${QV}::ConfigGui
   KF${QV}::WidgetsAddons
   KF${QV}::KIOCore KF${QV}::KIOFileWidgets
 )
