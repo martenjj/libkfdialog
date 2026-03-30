@@ -12,7 +12,7 @@
  *  COPYING included in the packaging of this library, or at		*
  *  http://www.gnu.org/licenses/gpl.html				*
  *									*
- *  Copyright (C) 2016-2021 Jonathan Marten				*
+ *  Copyright (C) 2016-2026 Jonathan Marten				*
  *                          <jjm AT keelhaul DOT me DOT uk>		*
  *			    and Kooka authors/contributors		*
  *									*
@@ -33,12 +33,12 @@ class DialogStateSaver;
 
 
 /**
- * @short Monitor a dialog box to save and restore the size and state.
+ * @short Monitor a dialogue box to save and restore the size and state.
  *
- * This class takes care of saving and restoring a dialog's size in the
+ * This class takes care of saving and restoring a dialogue's size in the
  * application config file.  All that is necessary is to create a
- * DialogStateWatcher object in the dialog's constructor, passing the
- * dialog as a parameter.  If the dialog is a subclass of DialogBase
+ * DialogStateWatcher object in the dialogue's constructor, passing the
+ * dialogue as a parameter.  If the dialogue is a subclass of DialogBase
  * then a watcher will be created automatically.
  *
  * The watcher uses a DialogStateSaver to do the actual saving and
@@ -56,7 +56,7 @@ public:
     /**
      * Constructor.
      *
-     * @param pnt the parent dialog
+     * @param pnt the parent dialogue
      **/
     explicit DialogStateWatcher(QDialog *pnt);
 
@@ -66,12 +66,12 @@ public:
     ~DialogStateWatcher() override = default;
 
     /**
-     * Set a state saver for the dialog being watched.
+     * Set a state saver for the dialogue being watched.
      *
      * This may be a subclass of a DialogStateSaver, reimplemented in
-     * order to save special dialog settings (e.g. the column states of
-     * a list view).  If this is not set then a plain DialogStateSaver
-     * will be created and used internally.  If a nullptr state saver is
+     * order to save special dialogue settings (e.g. the column states
+     * of a list view).  If this is not set then a plain DialogStateSaver
+     * will be created and used internally.  If a NULL state saver is
      * set explicitly using this function, then no state restoring or
      * saving will be done.
      *
@@ -81,7 +81,7 @@ public:
      *
      * @param saver the state saver
      *
-     * @note The saver should be set before the dialog is shown for
+     * @note The saver should be set before the dialogue is shown for
      * the first time.
      * @see DialogStateSaver
      **/
@@ -97,17 +97,17 @@ public:
     DialogStateSaver *stateSaver() const		{ return (mStateSaver); }
 
     /**
-     * Sets a button to save the state of the dialog when it is used.
+     * Sets a button to save the state of the dialogue when it is used.
      *
-     * Normally the dialog state will be saved when the parent dialog is accepted.
-     * This means when any button with the @c QDialogButtonBox::AcceptRole is
-     * clicked: that is, @c QDialogButtonBox::Ok and some others.  Notably, it
-     * does not include a @c QDialogButtonBox::Close button which is used where
+     * Normally the dialogue state will be saved when the parent dialogue is
+     * accepted.  This means when any button with the @c QDialogButtonBox::AcceptRole
+     * is clicked: that is, @c QDialogButtonBox::Ok and some others.  Notably,
+     * it does not include a @c QDialogButtonBox::Close button which is used where
      * there is no difference between closing and cancelling.  This means that the
-     * dialog state will not normally be saved when that button is used.
+     * dialogue state will not normally be saved when that button is used.
      *
-     * If a button is specified here, the state will be saved when that button is
-     * used, in addition to any button with the @c QDialogButtonBox::AcceptRole.
+     * If a button is specified here, the state will be saved when that button
+     * is used, in addition to any button with the @c QDialogButtonBox::AcceptRole.
      * Additional buttons may be specified multiple times, and they will all
      * save the state.
      *
