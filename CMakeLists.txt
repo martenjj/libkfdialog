@@ -41,8 +41,7 @@ endif ()
 
 set(QV ${QT_MAJOR_VERSION})
 
-set(VERSION "${QV}.0.0")
-set(SOVERSION ${QV})
+set(VERSION "${QV}.1.0")
 message(STATUS "Configuring for project '${CMAKE_PROJECT_NAME}' version ${VERSION}")
 
 ##########################################################################
@@ -125,7 +124,7 @@ target_link_libraries(kfdialog
   KF${QV}::KIOCore KF${QV}::KIOFileWidgets
 )
 
-set_target_properties(kfdialog PROPERTIES VERSION "${VERSION}" SOVERSION ${SOVERSION})
+set_target_properties(kfdialog PROPERTIES VERSION "${VERSION}")
 
 ##########################################################################
 ##  Package configuration						##
