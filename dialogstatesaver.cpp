@@ -12,7 +12,7 @@
  *  COPYING included in the packaging of this library, or at		*
  *  http://www.gnu.org/licenses/gpl.html				*
  *									*
- *  Copyright (C) 2016-2021 Jonathan Marten				*
+ *  Copyright (C) 2016-2026 Jonathan Marten				*
  *                          <jjm AT keelhaul DOT me DOT uk>		*
  *			    and Kooka authors/contributors		*
  *									*
@@ -42,7 +42,7 @@ DialogStateSaver::DialogStateSaver(QDialog *pnt)
 }
 
 
-static KConfigGroup configGroupFor(QWidget *window)
+static QString configNameFor(QWidget *window)
 {
     QString objName = window->objectName();
     if (objName.isEmpty())
@@ -51,8 +51,29 @@ static KConfigGroup configGroupFor(QWidget *window)
         qCWarning(LIBKFDIALOG_LOG) << "object name not set, using class name" << objName;
     }
     else qCDebug(LIBKFDIALOG_LOG) << "for" << objName << "which is a" << window->metaObject()->className();
+    return (objName);
+}
 
-    return (KSharedConfig::openConfig(QString(), KConfig::NoCascade)->group(objName));
+
+static KConfigGroup configGroupFor(QWidget *window, bool allowLegacy)
+{
+    const QString grpName = configNameFor(window);
+
+    KConfigGroup grp = KSharedConfig::openStateConfig()->group(grpName);
+    if (!grp.exists() && allowLegacy)
+    {
+        KConfigGroup oldGrp = KSharedConfig::openConfig()->group(grpName);
+        if (oldGrp.exists())
+        {
+            qCDebug(LIBKFDIALOG_LOG) << "migrating" << grpName
+                                     << "from" << oldGrp.config()->name()
+                                     << "to" << grp.config()->name();
+            oldGrp.moveValuesTo(grp);
+            oldGrp.config()->sync();
+        }
+    }
+
+    return (grp);
 }
 
 
@@ -60,12 +81,12 @@ void DialogStateSaver::restoreConfig()
 {
     if (!sSaveSettings) return;				// settings not to be restored
 
-    const KConfigGroup grp = configGroupFor(mParent);
+    const KConfigGroup grp = configGroupFor(mParent, true);
     this->restoreConfig(mParent, grp);
 }
 
 
-void DialogStateSaver::restoreConfig(QDialog *dialog, const KConfigGroup &grp)
+/* protected */ void DialogStateSaver::restoreConfig(QDialog *dialog, const KConfigGroup &grp)
 {
     restoreWindowState(dialog, grp);
 }
@@ -73,7 +94,7 @@ void DialogStateSaver::restoreConfig(QDialog *dialog, const KConfigGroup &grp)
 
 void DialogStateSaver::restoreWindowState(QWidget *widget)
 {
-    const KConfigGroup grp = configGroupFor(widget);
+    const KConfigGroup grp = configGroupFor(widget, true);
     restoreWindowState(widget, grp);
 }
 
@@ -99,13 +120,13 @@ void DialogStateSaver::saveConfig() const
 {
     if (!sSaveSettings) return;				// settings not to be saved
 
-    KConfigGroup grp = configGroupFor(mParent);
+    KConfigGroup grp = configGroupFor(mParent, false);
     this->saveConfig(mParent, grp);
     grp.sync();
 }
 
 
-void DialogStateSaver::saveConfig(QDialog *dialog, KConfigGroup &grp) const
+/* protected */ void DialogStateSaver::saveConfig(QDialog *dialog, KConfigGroup &grp) const
 {
     saveWindowState(dialog, grp);
 }
@@ -113,7 +134,7 @@ void DialogStateSaver::saveConfig(QDialog *dialog, KConfigGroup &grp) const
 
 void DialogStateSaver::saveWindowState(QWidget *widget)
 {
-    KConfigGroup grp = configGroupFor(widget);
+    KConfigGroup grp = configGroupFor(widget, false);
     saveWindowState(widget, grp);
 }
 

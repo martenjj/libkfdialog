@@ -12,7 +12,7 @@
  *  COPYING included in the packaging of this library, or at		*
  *  http://www.gnu.org/licenses/gpl.html				*
  *									*
- *  Copyright (C) 2016-2021 Jonathan Marten				*
+ *  Copyright (C) 2016-2026 Jonathan Marten				*
  *                          <jjm AT keelhaul DOT me DOT uk>		*
  *			    and Kooka authors/contributors		*
  *									*
@@ -30,6 +30,7 @@
 #include <QSpacerItem>
 
 #include <kguiitem.h>
+#include <kstandardshortcut.h>
 
 #include "dialogstatewatcher.h"
 #include "libkfdialog_logging.h"
@@ -42,12 +43,15 @@ DialogBase::DialogBase(QWidget *pnt)
 
     setModal(true);					// convenience, can reset if necessary
 
-    mMainWidget = nullptr;					// caller not provided yet
+    mMainWidget = nullptr;				// caller not provided yet
     mStateWatcher = new DialogStateWatcher(this);	// use our own as default
 
     mButtonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel, this);
     connect(mButtonBox, &QDialogButtonBox::accepted, this, &DialogBase::accept);
     connect(mButtonBox, &QDialogButtonBox::rejected, this, &DialogBase::reject);
+
+    mModifyingMode = false;
+    mOkShouldBeEnabled = true;
 }
 
 
@@ -81,21 +85,41 @@ void DialogBase::setButtons(QDialogButtonBox::StandardButtons buttons)
 
     if (buttons & QDialogButtonBox::Ok)
     {
-        qCDebug(LIBKFDIALOG_LOG) << "setup OK button";
+        qCDebug(LIBKFDIALOG_LOG) << "setting up OK button";
         QPushButton *okButton = mButtonBox->button(QDialogButtonBox::Ok);
         okButton->setDefault(true);
         okButton->setShortcut(Qt::CTRL|Qt::Key_Return);
     }
 
-// set F1 shortcut for Help?
-
+    if (buttons & QDialogButtonBox::Help)
+    {
+        qCDebug(LIBKFDIALOG_LOG) << "setting up Help button";
+        QPushButton *helpButton = mButtonBox->button(QDialogButtonBox::Help);
+        const QList<QKeySequence> shortcuts = KStandardShortcut::help();
+        if (!shortcuts.isEmpty()) helpButton->setShortcut(shortcuts.first());
+    }
 }
 
 
 void DialogBase::setButtonEnabled(QDialogButtonBox::StandardButton button, bool state)
 {
     QPushButton *but = mButtonBox->button(button);
-    if (but!=nullptr) but->setEnabled(state);
+    if (but==nullptr) return;
+
+    if (button==QDialogButtonBox::Ok)
+    {
+        mOkShouldBeEnabled = state;
+        if (mModifyingMode)
+        {
+            qDebug() << "modify mode, modified =" << mModifiedState << "ok ->" << state;
+            // Do not enable the "OK" button if it is currently disabled
+            // because the dialogue is not modified, just remember whether
+            // it should be enabled.
+            if (!mModifiedState && state) return;
+        }
+    }
+
+    but->setEnabled(state);
 }
 
 
@@ -151,4 +175,35 @@ QSpacerItem *DialogBase::verticalSpacerItem()
 QSpacerItem *DialogBase::horizontalSpacerItem()
 {
     return (new QSpacerItem(horizontalSpacing(), 1, QSizePolicy::Fixed, QSizePolicy::Minimum));
+}
+
+
+void DialogBase::setModified(bool mod)
+{
+    QPushButton *okBut = mButtonBox->button(QDialogButtonBox::Ok);
+    QPushButton *cancelBut = mButtonBox->button(QDialogButtonBox::Cancel);
+    QPushButton *closeBut = mButtonBox->button(QDialogButtonBox::Close);
+
+    if (okBut==nullptr || cancelBut==nullptr || closeBut==nullptr)
+    {
+        qCWarning(LIBKFDIALOG_LOG) << "Using modification mode requires OK, Cancel and Close buttons";
+        return;
+    }
+
+    qDebug() << "modification state =" << mod;
+    mModifyingMode = true;				// in effect from now on
+    mModifiedState = mod;				// note the modification state
+
+    if (!mod)						// not modified yet
+    {
+        okBut->setEnabled(false);			// button "OK" disabled
+        cancelBut->setVisible(false);			// button "Cancel" hidden
+        closeBut->setVisible(true);			// button "Close" visible
+    }
+    else						// settings are modified
+    {
+        okBut->setEnabled(mOkShouldBeEnabled);		// button "OK" as set
+        cancelBut->setVisible(true);			// button "Cancel" visible
+        closeBut->setVisible(false);			// button "Close" hidden
+    }
 }
