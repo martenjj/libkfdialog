@@ -12,7 +12,7 @@
  *  COPYING included in the packaging of this library, or at		*
  *  http://www.gnu.org/licenses/gpl.html				*
  *									*
- *  Copyright (C) 2016-2024 Jonathan Marten				*
+ *  Copyright (C) 2016-2026 Jonathan Marten				*
  *                          <jjm AT keelhaul DOT me DOT uk>		*
  *			    and Kooka authors/contributors		*
  *									*
@@ -44,7 +44,7 @@ class DialogStateSaver;
  *
  * - Managing the button box and providing access to its buttons
  * - Managing the top level layout
- * - Saving and restoring the dialog size
+ * - Saving and restoring the dialogue box size
  *
  * @author Jonathan Marten
  **/
@@ -68,25 +68,25 @@ public:
     QWidget *mainWidget() const				{ return (mMainWidget); }
 
     /**
-     * Set a state saver for the dialog.
+     * Set a state saver for the dialogue.
      *
      * This may be a subclass of a DialogStateSaver, reimplemented in
-     * order to save special dialog settings (e.g. the column states of
-     * a list view).  If this is not set then a plain DialogStateSaver
-     * will be created and used internally.  If a nullptr state saver is
+     * order to save special dialogue settings (e.g. the column states
+     * of a list view).  If this is not set then a plain DialogStateSaver
+     * will be created and used internally.  If a NULL state saver is
      * set explicitly using this function, then no state restoring or
      * saving will be done.
      *
      * @param saver the state saver
      *
-     * @note The saver should be set before the dialog is shown for
+     * @note The saver should be set before the dialogue is shown for
      * the first time.
      * @see DialogStateSaver
      **/
     void setStateSaver(DialogStateSaver *saver);
 
     /**
-     * Access the state saver used by the dialog.
+     * Access the state saver used by the dialogue.
      *
      * This may be the default one, or that set by @c setStateSaver().
      *
@@ -95,7 +95,7 @@ public:
     DialogStateSaver *stateSaver() const;
 
     /**
-     * Access the state watcher used by the dialog.
+     * Access the state watcher used by the dialogue.
      *
      * This is created and used internally.
      *
@@ -104,14 +104,14 @@ public:
     DialogStateWatcher *stateWatcher() const		{ return (mStateWatcher); }
 
     /**
-     * Get a vertical spacing suitable for use within the dialog layout.
+     * Get a vertical spacing suitable for use within the dialogue layout.
      *
      * @return The spacing hint
      **/
     static int verticalSpacing();
 
     /**
-     * Get a horizontal spacing suitable for use within the dialog layout.
+     * Get a horizontal spacing suitable for use within the dialogue layout.
      *
      * @return The spacing hint
      **/
@@ -132,7 +132,7 @@ public:
     static QSpacerItem *horizontalSpacerItem();
 
     /**
-     * Access the dialog's button box.
+     * Access the dialogue's button box.
      *
      * @return the button box
      **/
@@ -155,6 +155,8 @@ public:
      *
      * @param button The button to set
      * @param state The enable state for the button
+     *
+     * @see setModified()
      **/
     void setButtonEnabled(QDialogButtonBox::StandardButton button, bool state = true);
 
@@ -191,6 +193,42 @@ public:
      **/
     void setButtonGuiItem(QDialogButtonBox::StandardButton button, const KGuiItem &guiItem);
 
+    /**
+     * Enable modification mode and set whether the dialogue is modified.
+     *
+     * This mode sets the OK, Cancel and Close buttons accordingly as to
+     * whether the dialogue state has been modified.  If this is called
+     * with @p mod set to @c false then the the Close button will be
+     * shown, the Cancel button will be hidden, and the OK button will
+     * be disabled.  If called with @p mod set to @c true then Close
+     * will be hidden, Cancel will be shown, and OK will be enabled.
+     *
+     * If intended to be enabled as above, the state of the OK button
+     * also depends on whether @c setButtonEnabled() has been called
+     * for that button.  If the dialogue state is not modified, in which
+     * case the OK button is disabled, @c setButtonEnabled() will not
+     * enable or disable it but simply retain the intended state.  When
+     * the dialogue becomes modified, the OK button will be enabled
+     * accordingly.
+     *
+     * If this function is never called then there will be no tracking
+     * of the modification state and no changes will be made to any
+     * buttons.
+     *
+     * @param mod Whether dialogue settings have been modified
+     *
+     * @see setButtonEnabled()
+     **/
+    void setModified(bool mod);
+
+    /**
+     * Check whether the dialogue is modified.
+     *
+     * @return @c true if modification mode is in use and the
+     * dialogue is modified.
+     **/
+    bool isModified() const				{ return (mModifiedState); }
+
 protected:
     /**
      * Constructor.
@@ -200,7 +238,7 @@ protected:
     explicit DialogBase(QWidget *pnt = nullptr);
 
     /**
-     * Set the main widget to be displayed within the dialog.
+     * Set the main widget to be displayed within the dialogue.
      *
      * @param w The widget
      **/
@@ -215,6 +253,10 @@ private:
     QDialogButtonBox *mButtonBox;
     QWidget *mMainWidget;
     DialogStateWatcher *mStateWatcher;
+
+    bool mModifyingMode;
+    bool mModifiedState;
+    bool mOkShouldBeEnabled;
 };
 
 #endif							// DIALOGBASE_H

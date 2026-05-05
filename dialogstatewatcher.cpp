@@ -46,7 +46,7 @@ DialogStateWatcher::DialogStateWatcher(QDialog *pnt)
 
 void DialogStateWatcher::setSaveOnButton(QAbstractButton *but)
 {
-    qCDebug(LIBKFDIALOG_LOG) << "button" << but->text();
+    qCDebug(LIBKFDIALOG_LOG) << "for button" << but->text();
     connect(but, &QAbstractButton::clicked, this, &DialogStateWatcher::saveConfigInternal);
 }
 
