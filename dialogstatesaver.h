@@ -12,7 +12,7 @@
  *  COPYING included in the packaging of this library, or at		*
  *  http://www.gnu.org/licenses/gpl.html				*
  *									*
- *  Copyright (C) 2016-2021 Jonathan Marten				*
+ *  Copyright (C) 2016-2026 Jonathan Marten				*
  *                          <jjm AT keelhaul DOT me DOT uk>		*
  *			    and Kooka authors/contributors		*
  *									*
@@ -31,17 +31,17 @@ class KConfigGroup;
 
 
 /**
- * @short Save and restore the size and state of a dialog box.
+ * @short Save and restore the size and state of a dialogue box.
  *
- * This class manages saving and restoring a dialog's size in the
+ * This class manages saving and restoring a dialogue's size in the
  * application config file.  All that is necessary is to create a
- * DialogStateWatcher object in the dialog's constructor, passing the
- * dialog as a parameter.  If the dialog is a subclass of DialogBase
+ * DialogStateWatcher object in the dialogue's constructor, passing the
+ * dialogue as a parameter.  If the dialogue is a subclass of DialogBase
  * then a watcher and saver will be created automatically.
  *
  * The saver can be subclassed if necessary in order to save additional
  * information (e.g. the column states of a list view).  Since it does
- * not inherit QObject, the dialog itself can be the DialogStateSaver
+ * not inherit QObject, the dialogue itself can be the DialogStateSaver
  * to do its own saving and restoring, having access to its own internal
  * state.
  *
@@ -54,7 +54,7 @@ public:
     /**
      * Constructor.
      *
-     * @param pnt the parent dialog
+     * @param pnt the parent dialogue
      **/
     explicit DialogStateSaver(QDialog *pnt);
 
@@ -64,7 +64,7 @@ public:
     virtual ~DialogStateSaver() = default;
 
     /**
-     * Set the default option of whether the size of dialog boxes
+     * Set the default option of whether the size of dialogue boxes
      * is saved when accepted and restored when shown.  This is an
      * application-wide setting which takes effect immediately.
      * The default is @c true.
@@ -73,8 +73,8 @@ public:
      *
      * @note The setting is saved in the application's default configuration
      * file (as used by @c KSharedConfig::openConfig()) in a section named
-     * by the dialog's object name.  If no object name is set then the
-     * dialog's class name is used.
+     * by the dialogue's object name.  If no object name is set then the
+     * dialogue's class name is used.
      *
      * @see KSharedConfig
      * @see QObject::objectName()
@@ -82,9 +82,9 @@ public:
     static void setSaveSettingsDefault(bool on);
 
     /**
-     * Save the parent dialog size to the application config file.
+     * Save the parent dialogue size to the application config file.
      *
-     * This is called by the dialog state watcher and should not need
+     * This is called by the dialogue state watcher and should not need
      * to be called explicitly.  It simply calls the virtual method
      * of the same name, which may be reimplemented in a subclass in order
      * to save other settings (e.g. the column states of a list view).
@@ -92,9 +92,9 @@ public:
     void saveConfig() const;
 
     /**
-     * Restore the dialog size from the application config file.
+     * Restore the dialogue size from the application config file.
      *
-     * This is called by the dialog state watcher and should not need
+     * This is called by the dialogue state watcher and should not need
      * to be called explicitly.  It simply calls the virtual method
      * of the same name, which may be reimplemented in a subclass in order
      * to restore other settings (e.g. the column states of a list view).
@@ -104,7 +104,7 @@ public:
     /**
      * Save the state of a window.
      *
-     * The window need not be a dialog, therefore this can be used for
+     * The window need not be a dialogue, therefore this can be used for
      * saving the state of any window.  The state is saved to a group
      * named as appropriate for the window.
      *
@@ -115,7 +115,7 @@ public:
     /**
      * Save the state of a window.
      *
-     * The window need not be a dialog, therefore this can be used for
+     * The window need not be a dialogue, therefore this can be used for
      * saving the state of any window.  The state is saved to the
      * specified group.
      *
@@ -127,7 +127,7 @@ public:
     /**
      * Restore the state of a window.
      *
-     * The window need not be a dialog, therefore this can be used for
+     * The window need not be a dialogue, therefore this can be used for
      * restoring the state of any window.  The state is restore from a group
      * named as appropriate for the window.
      *
@@ -138,7 +138,7 @@ public:
     /**
      * Restore the state of a window.
      *
-     * The window need not be a dialog, therefore this can be used for
+     * The window need not be a dialogue, therefore this can be used for
      * restoring the state of any window.  The state is restored from
      * the specified group.
      *
@@ -149,25 +149,25 @@ public:
 
 protected:
     /**
-     * Save the dialog size to the application config file.
+     * Save the dialogue size to the application config file.
      *
      * This may be reimplemented in a subclass if necessary, in order
      * to save other settings (e.g. the column states of a list view).
-     * Call the base class implementation to save the dialog size.
+     * Call the base class implementation to save the dialogue size.
      *
-     * @param dialog dialog to save the state of
+     * @param dialog dialogue to save the state of
      * @param grp group to save the configuration to
      **/
     virtual void saveConfig(QDialog *dialog, KConfigGroup &grp) const;
 
     /**
-     * Restore the dialog size from the application config file.
+     * Restore the dialogue size from the application config file.
      *
      * This may be reimplemented in a subclass if necessary, in order
      * to restore other settings (e.g. the column states of a list view).
-     * Call the base class implementation to restore the dialog size.
+     * Call the base class implementation to restore the dialogue size.
      *
-     * @param dialog dialog to restore the state of
+     * @param dialog dialogue to restore the state of
      * @param grp group to restore the configuration from
      **/
     virtual void restoreConfig(QDialog *dialog, const KConfigGroup &grp);
